@@ -1,12 +1,13 @@
 config_dict = dict()
+config_dict['data_dir'] = '/workspaces/houghnet/MovingMNIST/data'
 config_dict['batch_size'] = 12
 config_dict['seed'] = 42
 config_dict['lr'] = 1e-4
-config_dict['beta_1'] = 0.9
-config_dict['beta_2'] = 0.98
 config_dict['epochs'] = 100
-config_dict['n_hidden_dim'] = 64
-config_dict['checkpoint_path'] = './train_logs/lightning_logs/version_14/checkpoints/epoch=75-step=57000.ckpt'
+config_dict['devices'] = [0] #[0, 1, 2, 3]
+config_dict["num_workers"] = 8
+config_dict['checkpoint_path'] = '/workspaces/houghnet/save_model/2023-10-24T00-00-00/checkpoint_17_0.004963.pth.tar'
+config_dict['predict_folder'] = '/workspaces/houghnet/MovingMNIST/data/predictions'
 
 
 class AttrDict(dict):
