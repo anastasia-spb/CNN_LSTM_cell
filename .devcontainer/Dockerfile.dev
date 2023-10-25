@@ -1,0 +1,29 @@
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
+
+ENV TZ=Europe/Minsk
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get update && apt-get install build-essential -y --no-install-recommends gcc
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
+
+RUN pip install --upgrade pip
+RUN pip install numpy opencv-python tqdm pytorch-lightning==2.0.9 wandb==0.15.12 Pillow==9.3.0
+
+
+WORKDIR /app
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
+ARG USER_ID
+ARG USERNAME=appuser
+
+RUN adduser --uid $USER_ID --disabled-password --gecos "" $USERNAME && chown -R $USERNAME /app
+USER $USERNAME
+
+
